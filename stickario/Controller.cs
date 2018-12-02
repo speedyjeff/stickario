@@ -11,6 +11,8 @@ namespace stickario
 {
     class Controller
     {
+        public World World { get; set; }
+
         public bool BeforeKeyPressed(Player player, char key)
         {
             switch(key)
@@ -28,6 +30,24 @@ namespace stickario
 
             // otherwise, let the other actions happen
             return false;
+        }
+
+        public void ObjectContact(Player player, Element elem)
+        {
+            if (elem is ItemBox)
+            {
+                // check if we are 'under' this object
+                if (player.Y > elem.Y)
+                {
+                    var box = elem as ItemBox;
+                    var item = box.Activate();
+
+                    if (item != null)
+                    {
+                        World.AddItem(item);
+                    }
+                }
+            }
         }
     }
 }

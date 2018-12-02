@@ -50,12 +50,13 @@ namespace stickario
             // put the player in the middle
             var players = new Player[]
               {
-                new Player() { Name = "YoBro", X = 0, Y = -30 }
+                new Player() { Name = "YoBro", X = 0, Y = -10 }
             };
             // any objects to interact with
             Element[] objects = new Element[]
                 {
-                    new Platform() { X = 0, Y = 30, Width = 1000, Height = 20}
+                    new Platform() { X = 0, Y = 30, Width = 1000, Height = 20},
+                    new ItemBox() { X = 100, Y = -100}
                 };
             var world = new World(
               new WorldConfiguration()
@@ -70,7 +71,9 @@ namespace stickario
               objects,
               background
             );
+            controller.World = world;
             world.OnBeforeKeyPressed += controller.BeforeKeyPressed;
+            world.OnContact += controller.ObjectContact;
             UI = new UIHookup(this, world);
         }
 
