@@ -37,7 +37,7 @@ namespace stickario
             if (elem is ItemBox)
             {
                 // check if we are 'under' this object
-                if (player.Y > elem.Y)
+                if (player.Y > elem.Y && player.X >= elem.X-(elem.Width/2) && player.X < elem.X+(elem.Width/2) )
                 {
                     var box = elem as ItemBox;
                     var item = box.Activate();

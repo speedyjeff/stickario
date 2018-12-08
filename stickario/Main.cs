@@ -16,7 +16,7 @@ namespace stickario
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new stickario());
+            Application.Run(new StickarioForm());
         }
     }
 }

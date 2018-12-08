@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace stickario
 {
-    partial class stickario
+    partial class StickarioForm
     {
         /// <summary>
         /// Required designer variable.
@@ -50,13 +50,15 @@ namespace stickario
             // put the player in the middle
             var players = new Player[]
               {
-                new Player() { Name = "YoBro", X = 0, Y = -10 }
+                new Stickario() { X = 0, Y = -10 }
             };
             // any objects to interact with
             Element[] objects = new Element[]
                 {
                     new Platform() { X = 0, Y = 30, Width = 1000, Height = 20},
-                    new ItemBox() { X = 100, Y = -100}
+                    new ItemBox() { Type = ItemBoxType.Question, X = 100, Y = -100},
+                    new ItemBox() { Type = ItemBoxType.Hidden, X = 150, Y = -100},
+                    new ItemBox() { Type = ItemBoxType.Brick, X = 200, Y = -100}
                 };
             var world = new World(
               new WorldConfiguration()
@@ -65,7 +67,7 @@ namespace stickario
                   Height = height,
                   EnableZoom = true,
                   ShowCoordinates = true,
-                  ApplyYGravity = true
+                  ApplyForces = true
               },
               players,
               objects,

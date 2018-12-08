@@ -49,11 +49,12 @@
     <Compile Include="Controller.cs" />
     <Compile Include="ItemBox.cs" />
     <Compile Include="Platform.cs" />
-    <Compile Include="stickario.cs">
+    <Compile Include="Stickario.cs" />
+    <Compile Include="StickarioForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="stickario.Designer.cs">
-      <DependentUpon>stickario.cs</DependentUpon>
+    <Compile Include="StickarioForm.Designer.cs">
+      <DependentUpon>StickarioForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +89,26 @@
       <Project>{c031d3fa-2ec9-423a-a04d-3b176c141577}</Project>
       <Name>engine.Winforms</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="media\stickario.d.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\stickario.i.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\stickario.l.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\stickario.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\stickario.r.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\stickario.u.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
