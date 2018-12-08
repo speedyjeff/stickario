@@ -20,6 +20,10 @@ namespace stickario
             ShowDefaultDrawing = false;
             HasPreloaded = false;
 
+            // image details
+            ImageTimer = new Stopwatch();
+            ImageTimer.Start();
+
             // check for movement
             PX = X;
             PY = Y;
@@ -36,11 +40,13 @@ namespace stickario
             {
                 HasPreloaded = true;
                 // load all the images
-                g.Image(@"media\stickario.i.png", -1000, -1000, Width, Height);
-                g.Image(@"media\stickario.l.png", -1000, -1000, Width, Height);
-                g.Image(@"media\stickario.r.png", -1000, -1000, Width, Height);
-                g.Image(@"media\stickario.u.png", -1000, -1000, Width, Height);
-                g.Image(@"media\stickario.d.png", -1000, -1000, Width, Height);
+                for(int j=0; j<ImagePaths.Length; j++)
+                {
+                    for(int i=0; i<ImagePaths[j].Length; i++)
+                    {
+                        g.Image(ImagePaths[j][i], -10000, -10000, Width, Height);
+                    }
+                }
             }
 
             // detect movement
@@ -53,25 +59,17 @@ namespace stickario
                 IdleTimer.Stop();
             }
 
-            // determine what action to draw
-            switch(action)
+            // draw the player
+            var images = ImagePaths[(int)CurrentAction];
+            var index = ImageIndex % images.Length;
+            g.Image(images[index], X - (Width / 2), Y - (Height / 2), Width, Height);
+
+            // advance
+            if (ImageTimer.ElapsedMilliseconds > ImageMax)
             {
-                case Action.Idle:
-                    g.Image(@"media\stickario.i.png", X - (Width / 2), Y - (Height / 2), Width, Height);
-                    break;
-                case Action.Left:
-                    g.Image(@"media\stickario.l.png", X - (Width / 2), Y - (Height / 2), Width, Height);
-                    break;
-                case Action.Right:
-                    g.Image(@"media\stickario.r.png", X - (Width / 2), Y - (Height / 2), Width, Height);
-                    break;
-                case Action.Up:
-                    g.Image(@"media\stickario.u.png", X - (Width / 2), Y - (Height / 2), Width, Height);
-                    break;
-                case Action.Down:
-                    g.Image(@"media\stickario.d.png", X - (Width / 2), Y - (Height / 2), Width, Height);
-                    break;
-                default: throw new Exception("Invalid Action : " + CurrentAction);
+                if (index == 0) ImageIndex = 1;
+                else ImageIndex++;
+                ImageTimer.Stop(); ImageTimer.Reset(); ImageTimer.Start();
             }
 
             base.Draw(g);
@@ -93,7 +91,7 @@ namespace stickario
         }
 
         #region private
-        private enum Action { Idle, Up, Left, Right, Down};
+        private enum Action { Idle = 0, Up = 1, Left = 2, Right = 3, Down = 4};
         private Action CurrentAction;
         private Action PreviousAction;
 
@@ -103,7 +101,20 @@ namespace stickario
         private bool HasPreloaded;
 
         private Stopwatch IdleTimer;
-        private const int IdleMax = 250;
+        private const int IdleMax = 500;
+
+        private Stopwatch ImageTimer;
+        private const int ImageMax = 250;
+        private int ImageIndex;
+
+        private string[][] ImagePaths = new string[][]
+        {
+            /* idle */ new string[] {@"media\idle.0.png", @"media\idle.1.png"},
+            /* up */ new string[] { @"media\up.0.png", @"media\up.1.png" },
+            /* left */ new string[] { @"media\run.l.0.png", @"media\run.l.1.png", @"media\run.l.2.png" },
+            /* right */ new string[] { @"media\run.r.0.png", @"media\run.r.1.png", @"media\run.r.2.png" },
+            /* down */ new string[] { @"media\down.0.png", @"media\down.1.png" }
+        };
 
         private Action DetectMovement()
         {
@@ -134,9 +145,14 @@ namespace stickario
         {
             if (CurrentAction != newAction)
             {
+                // this is a new condition
+
                 // capture the previous properly
                 PreviousAction = CurrentAction;
                 CurrentAction = newAction;
+
+                // reset the imageIndex
+                ImageIndex = 0;
             }
 
             return CurrentAction;

@@ -44,34 +44,11 @@ namespace stickario
 
             // basic green background
             var controller = new Controller();
-            var width = 10000;
-            var height = 800;
-            var background = new Background(width, height) { GroundColor = new RGBA { R = 153, G = 217, B = 234, A = 255 } };
-            // put the player in the middle
-            var players = new Player[]
-              {
-                new Stickario() { X = 0, Y = -10 }
-            };
-            // any objects to interact with
-            Element[] objects = new Element[]
-                {
-                    new Platform() { X = 0, Y = 30, Width = 1000, Height = 20},
-                    new ItemBox() { Type = ItemBoxType.Question, X = 100, Y = -100},
-                    new ItemBox() { Type = ItemBoxType.Hidden, X = 150, Y = -100},
-                    new ItemBox() { Type = ItemBoxType.Brick, X = 200, Y = -100}
-                };
             var world = new World(
-              new WorldConfiguration()
-              {
-                  Width = width,
-                  Height = height,
-                  EnableZoom = true,
-                  ShowCoordinates = true,
-                  ApplyForces = true
-              },
-              players,
-              objects,
-              background
+              controller.GetConfiguration(),
+              controller.GetPlayers(),
+              controller.GetObjects(),
+              controller.GetBackground()
             );
             controller.World = world;
             world.OnBeforeKeyPressed += controller.BeforeKeyPressed;
