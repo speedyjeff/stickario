@@ -16,22 +16,22 @@ namespace stickario
         public InvisibleMarker()
         {
             IsSolid = true;
-            Activated = false;
         }
 
         public MarkerType Type { get; set; }
-        public bool Activated { get; private set; }
 
         public void Deactivate()
         {
-            Activated = true;
             IsSolid = false;
         }
 
         public override void Draw(IGraphics g)
         {
-            //if (!Activated)
-            //    g.Rectangle(RGBA.Black, X - (Width / 2), Y - (Height / 2), Width, Height, false);
+            if (Type == MarkerType.FinishLine)
+            {
+                g.Rectangle(RGBA.White, X - Width, Y - (Height / 2), Width*2, Height, true);
+                g.Rectangle(RGBA.Black, X - (Width/2), Y - (Height / 2), Width/2, Height, true);
+            }
             base.Draw(g);
         }
     }
