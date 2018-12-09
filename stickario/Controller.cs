@@ -19,6 +19,7 @@ namespace stickario
 
             StartingX = (Width / 2) * -1;
             GroundLevel = (Height / 2) - (PlatformThickness * 3);
+            StartingY = GroundLevel;
         }
 
         public World World { get; set; }
@@ -40,7 +41,7 @@ namespace stickario
         {
             return new Player[]
               {
-                new Stickario() { X = StartingX + (PlatformThickness*2), Y = GroundLevel - (PlatformThickness*2) }
+                new Stickario() { X = StartingX + (PlatformThickness*2), Y = StartingY - (PlatformThickness*2) }
             };
         }
 
@@ -79,6 +80,12 @@ namespace stickario
         //
         // Control
         //
+        public void Setup()
+        {
+            // called right before game play starts
+            World.Music(@"media\DANCE.mid", true /*repeat*/);
+        }
+
         public bool BeforeKeyPressed(Player player, char key)
         {
             switch(key)
@@ -147,13 +154,13 @@ namespace stickario
                         break;
                     case MarkerType.Death:
                         // check for game over
+                        var score = player.X - StartingX;
 
-                        // remove the player and show the menu
-                        player.ReduceHealth(player.Health);
-                        World.RemoveItem(player);
+                        // teleport the player back to the begining
+                        World.Teleport(player, StartingX + (PlatformThickness * 2), StartingY - (PlatformThickness * 2));
 
                         // show the menu
-                        World.ShowMenu( new EndMenu(player, false) { Score = player.X - StartingX } );
+                        World.ShowMenu( new EndMenu(player, false) { Score = score } );
                         break;
                     case MarkerType.FinishLine:
                         // it is a win
@@ -302,6 +309,7 @@ namespace stickario
         private const int ItemWidth = 50;
         private int GroundLevel;
         private int StartingX;
+        private int StartingY;
         private Random Rand;
         #endregion
     }

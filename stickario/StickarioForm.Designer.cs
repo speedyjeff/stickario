@@ -54,13 +54,28 @@ namespace stickario
             world.OnBeforeKeyPressed += controller.BeforeKeyPressed;
             world.OnContact += controller.ObjectContact;
             UI = new UIHookup(this, world);
+
+            // call right before controls enters the game loop
+            controller.Setup();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            UI.ProcessCmdKey(keyData);
+            if (UI != null)
+            {
+                UI.ProcessCmdKey(keyData);
+            }
             return base.ProcessCmdKey(ref msg, keyData);
         } // ProcessCmdKey
+
+        protected override void WndProc(ref Message m)
+        {
+            if (UI != null)
+            {
+                UI.ProcessWndProc(ref m);
+            }
+            base.WndProc(ref m);
+        } // WndProc
 
         #endregion
     }
