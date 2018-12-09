@@ -90,6 +90,7 @@ namespace stickario
                 case Constants.Down2:
                 case Constants.DownArrow:
                 case Constants.RightMouse:
+                case Constants.LeftMouse:
                     // disable the up and down keys
                     return true;
             }
