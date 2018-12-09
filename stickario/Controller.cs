@@ -71,7 +71,7 @@ namespace stickario
                 Width = Width,
                 Height = Height,
                 EnableZoom = true,
-                ShowCoordinates = true,
+                ShowCoordinates = false,
                 ApplyForces = true
             };
         }
