@@ -10,6 +10,7 @@ using engine.Common.Entities;
 namespace stickario
 {
     enum ItemBoxType { Question, Hidden, Brick };
+    enum ItemBoxReturn { Nothing, Coin, Spike };
 
     class ItemBox : Obstacle
     {
@@ -24,19 +25,25 @@ namespace stickario
 
         public bool Activated { get; private set; }
 
-        public Element ContainingItem { get; private set; }
-
         public ItemBoxType Type { get; set; }
 
-        public Element Activate()
+        public ItemBoxReturn Activate()
         {
             lock (this)
             {
-                if (Activated) return null;
+                if (Activated) return ItemBoxReturn.Nothing;
 
                 Activated = true;
-                AdjustmentAmount = AdjustmentMax; // indicate visually that it has been hit
-                return ContainingItem;
+                switch(Type)
+                {
+                    case ItemBoxType.Brick:
+                        // have it disapear
+                        IsSolid = false;
+                        return ItemBoxReturn.Nothing;
+                    case ItemBoxType.Hidden: return ItemBoxReturn.Spike;
+                    case ItemBoxType.Question: return ItemBoxReturn.Coin;
+                    default: throw new Exception("Unknown ItemBoxType : " + Type);
+                }
             }
         }
 
@@ -52,8 +59,13 @@ namespace stickario
                 AdjustmentAmount -= AdjustmentIncrement;
             }
 
-            if (Activated)
+            if (!IsSolid)
             {
+                // do not display anything
+            }
+            else if (Activated)
+            {
+                // grayed out box
                 g.Rectangle(new RGBA() { R = 127, G = 127, B = 127, A = 255 }, x - (Width / 2), y - (Height / 2), Width, Height, true);
             }
             else

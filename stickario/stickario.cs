@@ -19,6 +19,7 @@ namespace stickario
             Health = 75;
             ShowDefaultDrawing = false;
             HasPreloaded = false;
+            Coins = 0;
 
             // image details
             ImageTimer = new Stopwatch();
@@ -30,6 +31,8 @@ namespace stickario
             IdleTimer = new Stopwatch();
             IdleTimer.Start();
         }
+
+        public int Coins { get; set; }
 
         public override string ImagePath => @"media\stickario.png";
 

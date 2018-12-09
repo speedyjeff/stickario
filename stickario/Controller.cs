@@ -20,6 +20,10 @@ namespace stickario
             StartingX = (Width / 2) * -1;
             GroundLevel = (Height / 2) - (PlatformThickness * 3);
             StartingY = GroundLevel;
+
+            Stickario = new Stickario() { X = StartingX + (PlatformThickness * 2), Y = StartingY - (PlatformThickness * 2) };
+
+            EndMenu = new EndMenu(Stickario);
         }
 
         public World World { get; set; }
@@ -39,10 +43,7 @@ namespace stickario
 
         public Player[] GetPlayers()
         {
-            return new Player[]
-              {
-                new Stickario() { X = StartingX + (PlatformThickness*2), Y = StartingY - (PlatformThickness*2) }
-            };
+            return new Player[] { Stickario };
         }
 
         public Element[] GetObjects()
@@ -115,18 +116,35 @@ namespace stickario
 
         public void ObjectContact(Player player, Element elem)
         {
+            // if the player is not stickario, then do nothing
+            if (!(player is Stickario)) return;
+
+            var stickario = (player as Stickario);
+
             if (elem is ItemBox)
             {
                 // check if we are 'under' this object
                 if (player.Y > elem.Y && player.X >= elem.X-(elem.Width/2) && player.X < elem.X+(elem.Width/2) )
                 {
                     var box = elem as ItemBox;
-                    var item = box.Activate();
+                    var action = box.Activate();
 
-                    if (item != null)
+                    switch(action)
                     {
-                        World.AddItem(item);
+                        case ItemBoxReturn.Coin:
+                            stickario.Coins++;
+                            World.Play(CoinSoundPath);
+                            break;
+                        case ItemBoxReturn.Nothing:
+                            break;
+                        case ItemBoxReturn.Spike:
+                            // teleport back to the begining
+                            DisplayEnd(player, EndReason.DeathBySpike);
+                            World.Play(DeathSoundPath);
+                            break;
+                        default: throw new Exception("Invalid ItemBoxReturn : " + action);
                     }
+
                 }
             }
 
@@ -160,24 +178,14 @@ namespace stickario
                         }
                         break;
                     case MarkerType.Death:
-                        // check for game over
-                        var score = player.X - StartingX;
-
-                        // teleport the player back to the begining
-                        World.Teleport(player, StartingX + (PlatformThickness * 2), StartingY - (PlatformThickness * 2));
-
-                        // show the menu
-                        World.ShowMenu( new EndMenu(player, false) { Score = score } );
+                        // teleport back to begining
+                        DisplayEnd(player, EndReason.DeathByFalling);
+                        World.Play(DeathSoundPath);
                         break;
                     case MarkerType.FinishLine:
                         // it is a win
-
-                        // remove the player and show the menu
-                        player.ReduceHealth(player.Health);
-                        World.RemoveItem(player);
-
-                        // show the menu
-                        World.ShowMenu(new EndMenu(player, true) { Score = player.X - StartingX });
+                        DisplayEnd(player, EndReason.AtFinish);
+                        World.Play(WinSoundPath);
                         break;
                     default: throw new Exception("Unknown MarkerType : " + marker.Type);
                 }
@@ -240,7 +248,7 @@ namespace stickario
             {
                 for(var col=0; col<colLength; col++)
                 {
-                    world[row, col] = Rand.Next() % 10 == 0;
+                    world[row, col] = Rand.Next() % 8 == 0;
                 }
             }
 
@@ -318,6 +326,33 @@ namespace stickario
         private int StartingX;
         private int StartingY;
         private Random Rand;
+        private EndMenu EndMenu;
+        private Stickario Stickario;
+
+        private string CoinSoundPath => @"media\bling.wav";
+        private string DeathSoundPath => @"media\oof.wav";
+        private string WinSoundPath => @"media\yea.wav";
+
+        private void DisplayEnd(Player player, EndReason reason)
+        {
+            var score = player.X - StartingX;
+
+            if (reason == EndReason.AtFinish)
+            {
+                // remove the player and show the menu
+                player.ReduceHealth(player.Health);
+                World.RemoveItem(player);
+            }
+            else
+            {
+                // teleport the player back to the begining
+                World.Teleport(player, StartingX + (PlatformThickness * 2), StartingY - (PlatformThickness * 2));
+            }
+
+            // show the menu
+            EndMenu.Update(reason, score);
+            World.ShowMenu(EndMenu);
+        }
         #endregion
     }
 }

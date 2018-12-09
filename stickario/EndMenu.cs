@@ -9,37 +9,68 @@ using engine.Common.Entities;
 
 namespace stickario
 {
+    enum EndReason { AtFinish, DeathBySpike, DeathByFalling };
+
     class EndMenu : Menu
     {
-        public EndMenu(Player player, bool atFinish)
+        public EndMenu(Stickario player)
         {
             Player = player;
-            AtFinish = atFinish;
         }
-
-        public float Score { get; set; }
 
         public override void Draw(IGraphics g)
         {
             g.DisableTranslation();
             {
-                if (AtFinish)
+                var y = (g.Height / 2);
+                g.Text(RGBA.Black, g.Width / 2,  y, string.Format("Score       = {0}", Score), 24);
+                y += 25;
+                g.Text(RGBA.Black, g.Width / 2, y, string.Format("Max Score   = {0}", MaxScore), 24);
+                y += 25;
+                g.Text(RGBA.Black, g.Width / 2, y, string.Format("Total Score = {0}", TotalScore), 24);
+                y += 25;
+                g.Text(RGBA.Black, g.Width / 2, y, string.Format("Total Coins = {0}", Player.Coins), 24);
+                y += 25;
+
+                if (Reason == EndReason.AtFinish)
                 {
-                    g.Text(RGBA.Black, g.Width / 2, g.Height / 2, "YOU ARE THE WINNER!", 24);
+                    g.Text(RGBA.Black, g.Width / 2, y, "YOU ARE THE WINNER!", 24);
                 }
                 else
                 {
-                    g.Text(RGBA.Black, g.Width / 2, g.Height / 2, "Try agin!", 24);
+                    switch(Reason)
+                    {
+                        case EndReason.DeathByFalling:
+                            g.Text(RGBA.Black, g.Width / 2, y, "Death by falling...", 24);
+                            y += 25;
+                            break;
+                        case EndReason.DeathBySpike:
+                            g.Text(RGBA.Black, g.Width / 2, y, "Death by hidden spikes...", 24);
+                            y += 25;
+                            break;
+                    }
+
+                    g.Text(RGBA.Black, g.Width / 2, y, "[esc] to try agin", 24);
                 }
-                g.Text(RGBA.Black, g.Width / 2, (g.Height / 2) + 25, string.Format("Score = {0}", Score), 24);
             }
             g.EnableTranslation();
             base.Draw(g);
         }
 
+        public void Update(EndReason reason, float score)
+        {
+            Reason = reason;
+            Score = score;
+            TotalScore += score;
+            MaxScore = Math.Max(MaxScore, score);
+        }
+
         #region private
-        private Player Player;
-        private bool AtFinish;
+        private Stickario Player;
+        private float TotalScore;
+        private float MaxScore;
+        private float Score;
+        private EndReason Reason;
         #endregion  
     }
 }
