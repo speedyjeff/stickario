@@ -86,19 +86,26 @@ namespace stickario
             World.Music(@"media\DANCE.mid", true /*repeat*/);
         }
 
-        public bool BeforeKeyPressed(Player player, char key)
+        public bool BeforeKeyPressed(Player player, ref char key)
         {
             switch(key)
             {
                 case Constants.Up:
                 case Constants.Up2:
                 case Constants.UpArrow:
+                case Constants.LeftMouse:
+                    // switch these to 'jump'
+                    key = Constants.Jump;
+                    break;
+                case Constants.RightMouse:
+                    // use as run in either left or right based on the angle
+                    if (player.Angle > 180) key = Constants.Left;
+                    else key = Constants.Right;
+                    break;
                 case Constants.Down:
                 case Constants.Down2:
                 case Constants.DownArrow:
-                case Constants.RightMouse:
-                case Constants.LeftMouse:
-                    // disable the up and down keys
+                    // disable the down keys
                     return true;
             }
 
