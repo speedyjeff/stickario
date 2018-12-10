@@ -20,37 +20,48 @@ namespace stickario
 
         public override void Draw(IGraphics g)
         {
+            var width = 650;
+            var height = 300;
+
+            var left = (g.Width - width) / 2;
+            var top = (g.Height - height) / 2;
+
             g.DisableTranslation();
             {
-                var y = (g.Height / 2);
-                g.Text(RGBA.Black, g.Width / 2,  y, string.Format("Score       = {0}", Score), 24);
-                y += 25;
-                g.Text(RGBA.Black, g.Width / 2, y, string.Format("Max Score   = {0}", MaxScore), 24);
-                y += 25;
-                g.Text(RGBA.Black, g.Width / 2, y, string.Format("Total Score = {0}", TotalScore), 24);
-                y += 25;
-                g.Text(RGBA.Black, g.Width / 2, y, string.Format("Total Coins = {0}", Player.Coins), 24);
-                y += 25;
-
+                g.Rectangle(new RGBA() { R = 255, G = 255, B = 255, A = 200 }, left, top, width, height);
+                left += 10;
+                top += 10;
                 if (Reason == EndReason.AtFinish)
                 {
-                    g.Text(RGBA.Black, g.Width / 2, y, "YOU ARE THE WINNER!", 24);
+                    g.Text(RGBA.Black, left, top, "OU ARE THE WINNER!", 32);
                 }
                 else
                 {
-                    switch(Reason)
+                    switch (Reason)
                     {
                         case EndReason.DeathByFalling:
-                            g.Text(RGBA.Black, g.Width / 2, y, "Death by falling...", 24);
-                            y += 25;
+                            g.Text(RGBA.Black, left, top, "Death by falling...", 32);
                             break;
                         case EndReason.DeathBySpike:
-                            g.Text(RGBA.Black, g.Width / 2, y, "Death by hidden spikes...", 24);
-                            y += 25;
+                            g.Text(RGBA.Black, left, top, "Death by hidden spikes...", 32);
                             break;
                     }
+                }
+                top += 50;
 
-                    g.Text(RGBA.Black, g.Width / 2, y, "[esc] to try agin", 24);
+
+                g.Text(RGBA.Black, left, top, string.Format("Score          = {0}", Score));
+                top += 50;
+                g.Text(RGBA.Black, left, top, string.Format("Max Score  = {0}", MaxScore));
+                top += 50;
+                g.Text(RGBA.Black, left, top, string.Format("Total Score = {0}", TotalScore));
+                top += 50;
+                g.Text(RGBA.Black, left, top, string.Format("Total Coins = {0}", Player.Coins));
+                top += 50;
+
+                if (Reason != EndReason.AtFinish)
+                {
+                    g.Text(RGBA.Black, left, top, "[esc] to try agin", 24);
                 }
             }
             g.EnableTranslation();

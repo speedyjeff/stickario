@@ -37,7 +37,7 @@ namespace stickario
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.Text = "Stickario";
             this.Width = 1024;
             this.Height = 800;
             this.DoubleBuffered = true;

@@ -51,6 +51,7 @@
     <Compile Include="ItemBox.cs" />
     <Compile Include="EndMenu.cs" />
     <Compile Include="Platform.cs" />
+    <Compile Include="StartMenu.cs" />
     <Compile Include="Stickario.cs" />
     <Compile Include="StickarioForm.cs">
       <SubType>Form</SubType>

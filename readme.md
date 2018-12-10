@@ -4,7 +4,11 @@ This project started as a joint coding project with my youngest son.  I wanted t
 
 The project uses C# and a WinForms shell.  This project has an updated game engine (with more refactoring than [shootmup](https://github.com/speedyjeff/shootmup))
 
+![start screen](https://github.com/speedyjeff/stickario/blob/master/media/start.png)
+
 ![game play](https://github.com/speedyjeff/stickario/blob/master/media/gameplay.png)
+
+![end screen](https://github.com/speedyjeff/stickario/blob/master/media/end.png)
 
 ![game play live](https://github.com/speedyjeff/stickario/blob/master/media/gameplay.gif)
 

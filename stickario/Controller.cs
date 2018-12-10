@@ -24,6 +24,7 @@ namespace stickario
             Stickario = new Stickario() { X = StartingX + (PlatformThickness * 2), Y = StartingY - (PlatformThickness * 2) };
 
             EndMenu = new EndMenu(Stickario);
+            StartMenu = new StartMenu();
         }
 
         public World World { get; set; }
@@ -74,7 +75,9 @@ namespace stickario
                 Height = Height,
                 EnableZoom = true,
                 ShowCoordinates = false,
-                ApplyForces = true
+                ApplyForces = true,
+                EndMenu = EndMenu,
+                StartMenu = StartMenu
             };
         }
 
@@ -326,6 +329,7 @@ namespace stickario
         private int StartingX;
         private int StartingY;
         private Random Rand;
+        private StartMenu StartMenu;
         private EndMenu EndMenu;
         private Stickario Stickario;
 
