@@ -9,7 +9,7 @@ using engine.Common.Entities;
 
 namespace stickario
 {
-    enum MarkerType { AddMore, FinishLine, Death };
+    enum MarkerType { FinishLine, Death };
 
     class InvisibleMarker : Element
     {

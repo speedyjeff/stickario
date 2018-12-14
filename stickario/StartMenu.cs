@@ -41,6 +41,7 @@ namespace stickario
                 g.Text(RGBA.Black, left, top, "Good luck, you will need it!");
                 top += 50;
                 g.Text(RGBA.Black, left, top, "[esc] to start");
+                g.Text(RGBA.Black, left + 250, top, string.Format("[1] toggle enemies ({0})", SpiderNest.Activated ? "enabled" : "disabled"), 12);
             }
             g.EnableTranslation();
 

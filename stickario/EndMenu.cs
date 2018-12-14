@@ -9,7 +9,7 @@ using engine.Common.Entities;
 
 namespace stickario
 {
-    enum EndReason { AtFinish, DeathBySpike, DeathByFalling };
+    enum EndReason { AtFinish, DeathBySpike, DeathByFalling, DeathBySpider };
 
     class EndMenu : Menu
     {
@@ -33,7 +33,7 @@ namespace stickario
                 top += 10;
                 if (Reason == EndReason.AtFinish)
                 {
-                    g.Text(RGBA.Black, left, top, "OU ARE THE WINNER!", 32);
+                    g.Text(RGBA.Black, left, top, "YOU ARE THE WINNER!", 32);
                 }
                 else
                 {
@@ -45,23 +45,28 @@ namespace stickario
                         case EndReason.DeathBySpike:
                             g.Text(RGBA.Black, left, top, "Death by hidden spikes...", 32);
                             break;
+                        case EndReason.DeathBySpider:
+                            g.Text(RGBA.Black, left, top, "Death by spider attack...", 32);
+                            break;
                     }
                 }
                 top += 50;
 
-
                 g.Text(RGBA.Black, left, top, string.Format("Score          = {0}", Score));
+                top += 30;
+                g.Text(RGBA.Black, left, top, string.Format("Total Coins = {0}", Player.Coins));
+                top += 30;
+                g.Text(RGBA.Black, left, top, string.Format("Spider Kills = {0}", Player.Kills));
                 top += 50;
                 g.Text(RGBA.Black, left, top, string.Format("Max Score  = {0}", MaxScore));
-                top += 50;
+                top += 30;
                 g.Text(RGBA.Black, left, top, string.Format("Total Score = {0}", TotalScore));
-                top += 50;
-                g.Text(RGBA.Black, left, top, string.Format("Total Coins = {0}", Player.Coins));
                 top += 50;
 
                 if (Reason != EndReason.AtFinish)
                 {
                     g.Text(RGBA.Black, left, top, "[esc] to try agin", 24);
+                    g.Text(RGBA.Black, left + 250, top + 12, string.Format("[1] toggle enemies ({0})", SpiderNest.Activated ? "enabled" : "disabled"), 12);
                 }
             }
             g.EnableTranslation();
