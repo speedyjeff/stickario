@@ -103,8 +103,6 @@ namespace stickario
 
         public override void Feedback(ActionEnum action, object item, bool result)
         {
-            if (IsDead) return;
-
             // check if we are stuck and need to jump
             if (action == ActionEnum.Move && !result)
             {
@@ -112,8 +110,11 @@ namespace stickario
             }
 
             // check if dead
-            if (InDeathSequence == 0)
+            if (InDeathSequence == 0 || IsDead)
             {
+                // kill the spider
+                ReduceHealth(Health);
+
                 // die to help protect the starting zone
                 if (OnDeath != null) OnDeath(this);
             }
@@ -126,6 +127,8 @@ namespace stickario
 
         public void StartDeathSequence()
         {
+            if (InDeathSequence >= 0) return;
+
             // start death sequence
             InDeathSequence = DeathSequenceMax;
             IsSolid = false;

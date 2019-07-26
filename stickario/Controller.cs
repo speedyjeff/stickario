@@ -16,6 +16,7 @@ namespace stickario
             Width = 10000;
             Height = 1000;
             Rand = new Random();
+            ActiveSpiders = new List<Spider>();
 
             StartingX = (Width / 2) * -1;
             GroundLevel = (Height / 2) - (PlatformThickness * 3);
@@ -390,6 +391,7 @@ namespace stickario
         private EndMenu EndMenu;
         private Stickario Stickario;
         private SpiderNest[] Nests;
+        private List<Spider> ActiveSpiders;
 
         private string CoinSoundPath => @"media\bling.wav";
         private string DeathSoundPath => @"media\oof.wav";
@@ -405,24 +407,8 @@ namespace stickario
         {
             var score = Score(player);
 
-            // take action
-            if (reason == EndReason.AtFinish)
-            {
-                // remove the player and show the menu
-                player.ReduceHealth(player.Health);
-                World.RemoveItem(player);
-            }
-            else
-            {
-                // teleport the player back to the begining
-                World.Teleport(player, StartingX + (PlatformThickness * 2), StartingY - (PlatformThickness * 2));
-
-                // remove all the spiders, and reset
-                World.RemoveAllItems(typeof(Spider));
-            }
-
             // play sound
-            switch(reason)
+            switch (reason)
             {
                 case EndReason.AtFinish:
                     World.Play(WinSoundPath);
@@ -438,6 +424,31 @@ namespace stickario
             // show the menu
             EndMenu.Update(reason, score);
             World.ShowMenu(EndMenu);
+
+            // TODO! wait for Stickario to finish its current move
+
+            // take action
+            if (reason == EndReason.AtFinish)
+            {
+                // remove the player and show the menu
+                player.ReduceHealth(player.Health);
+                World.RemoveItem(player);
+            }
+            else
+            {
+                // teleport the player back to the begining
+                World.Teleport(player, StartingX + (PlatformThickness * 2), StartingY - (PlatformThickness * 2));
+
+                // start death sequence for all active spiders
+                lock(ActiveSpiders)
+                {
+                    foreach (var spider in ActiveSpiders) spider.StartDeathSequence();
+                    ActiveSpiders.Clear();
+                }
+            }
+
+
+
         }
 
         private void AddSpider(float x, float y)
@@ -470,17 +481,24 @@ namespace stickario
                 Y = y,
                 Direction = dir
             };
-            spider.OnDeath += RemoveSpider;
+
+            // track the active spider
+            lock(ActiveSpiders)
+            {
+                ActiveSpiders.Add(spider);
+            }
+
+            // on death, stop tracking this spider
+            spider.OnDeath += (s) =>
+            {
+                lock(ActiveSpiders)
+                {
+                    ActiveSpiders.Remove(s);
+                }
+            };
+
+            // add the spider
             World.AddItem( spider );
-        }
-
-        private void RemoveSpider(Spider spider)
-        {
-            // kill the spider
-            spider.ReduceHealth(spider.Health);
-
-            // remove from world
-            World.RemoveItem(spider);
         }
         #endregion
     }
