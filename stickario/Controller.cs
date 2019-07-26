@@ -446,9 +446,6 @@ namespace stickario
                     ActiveSpiders.Clear();
                 }
             }
-
-
-
         }
 
         private void AddSpider(float x, float y)
