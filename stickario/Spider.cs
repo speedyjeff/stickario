@@ -79,7 +79,7 @@ namespace stickario
             base.Draw(g);
         }
 
-        public override ActionEnum Action(List<Element> elements, float angleToCenter, bool inZone, ref float xdelta, ref float ydelta, ref float angle)
+        public override ActionEnum Action(List<Element> elements, float angleToCenter, bool inZone, ref float xdelta, ref float ydelta, ref float zdelta, ref float angle)
         {
             xdelta = ydelta = 0;
             if (IsDead || InDeathSequence >= 0) return ActionEnum.None;
