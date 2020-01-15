@@ -121,6 +121,7 @@ namespace stickario
         {
             switch(key)
             {
+                case Constants.Space:
                 case Constants.Up:
                 case Constants.Up2:
                 case Constants.UpArrow:
