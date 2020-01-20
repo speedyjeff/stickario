@@ -102,7 +102,7 @@ namespace stickario
                 Height = Height,
                 EnableZoom = true,
                 ShowCoordinates = false,
-                ForcesAppied = ((int)Forces.X | (int)Forces.Y),
+                ForcesApplied = ((int)Forces.X | (int)Forces.Y),
                 EndMenu = EndMenu,
                 StartMenu = StartMenu
             };
