@@ -37,6 +37,7 @@ namespace stickario
         }
 
         public int Coins { get; set; }
+        public event Action<Player, float> OnApplyForce;
 
         public override string ImagePath => @"media\stickario.png";
 
@@ -65,13 +66,11 @@ namespace stickario
         public override void Feedback(ActionEnum action, object item, bool result)
         {
             // track what the player is doing and was doing
-            if (action == ActionEnum.Jump)
+            if (action == ActionEnum.Jump && OnApplyForce != null)
             {
                 // apply a force to the player to continue to move
-                if (Motion.CurrentAction == MotionAction.Left)
-                    XForcePercentage = -1;
-                else if (Motion.CurrentAction == MotionAction.Right)
-                    XForcePercentage = 1;
+                if (Motion.CurrentAction == MotionAction.Left) OnApplyForce(this, -1f);
+                else if (Motion.CurrentAction == MotionAction.Right) OnApplyForce(this, 1f);
             }
 
             base.Feedback(action, item, result);

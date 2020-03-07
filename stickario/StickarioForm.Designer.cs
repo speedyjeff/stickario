@@ -51,6 +51,7 @@ namespace stickario
               controller.GetBackground()
             );
             controller.World = world;
+            controller.Stickario.OnApplyForce += (player, percentage) => world.ApplyForce(player, Forces.X, percentage);
             world.OnBeforeKeyPressed += controller.BeforeKeyPressed;
             world.OnContact += controller.ObjectContact;
             UI = new UIHookup(this, world);

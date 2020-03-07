@@ -42,6 +42,7 @@ namespace stickario
         }
 
         public World World { get; set; }
+        public Stickario Stickario { get; set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
 
@@ -150,18 +151,18 @@ namespace stickario
             return false;
         }
 
-        public void ObjectContact(Player player, Element elem)
+        public void ObjectContact(Element element, Element elem)
         {
             Stickario stickario = null;
 
-            if (player is Stickario)
+            if (element is Stickario)
             {
-                stickario = (player as Stickario);
+                stickario = (element as Stickario);
 
                 if (elem is ItemBox)
                 {
                     // check if we are 'under' this object
-                    if (player.Y > elem.Y && player.X >= elem.X - (elem.Width / 2) && player.X < elem.X + (elem.Width / 2))
+                    if (element.Y > elem.Y && element.X >= elem.X - (elem.Width / 2) && element.X < elem.X + (elem.Width / 2))
                     {
                         var box = elem as ItemBox;
                         var action = box.Activate();
@@ -176,7 +177,7 @@ namespace stickario
                                 break;
                             case ItemBoxReturn.Spike:
                                 // teleport back to the begining
-                                DisplayEndAndPlaySound(player, EndReason.DeathBySpike);
+                                DisplayEndAndPlaySound(stickario, EndReason.DeathBySpike);
                                 break;
                             default: throw new Exception("Invalid ItemBoxReturn : " + action);
                         }
@@ -193,11 +194,11 @@ namespace stickario
                     {
                         case MarkerType.Death:
                             // teleport back to begining
-                            DisplayEndAndPlaySound(player, EndReason.DeathByFalling);
+                            DisplayEndAndPlaySound(stickario, EndReason.DeathByFalling);
                             break;
                         case MarkerType.FinishLine:
                             // it is a win
-                            DisplayEndAndPlaySound(player, EndReason.AtFinish);
+                            DisplayEndAndPlaySound(stickario, EndReason.AtFinish);
                             break;
                         default: throw new Exception("Unknown MarkerType : " + marker.Type);
                     }
@@ -205,9 +206,9 @@ namespace stickario
             }
 
             Spider spider = (elem is Spider) ? elem as Spider : 
-                ((player is Spider) ? player as Spider : null );
+                ((element is Spider) ? element as Spider : null );
             stickario = (elem is Stickario) ? elem as Stickario :
-                ((player is Stickario) ? player as Stickario : null);
+                ((element is Stickario) ? element as Stickario : null);
 
             // spider attack
             if (spider != null && stickario != null)
@@ -390,7 +391,6 @@ namespace stickario
         private Random Rand;
         private StartMenu StartMenu;
         private EndMenu EndMenu;
-        private Stickario Stickario;
         private SpiderNest[] Nests;
         private List<Spider> ActiveSpiders;
 
