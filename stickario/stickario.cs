@@ -25,11 +25,11 @@ namespace stickario
             Motion = new InMotion(
                 new ImageSet[]
                 {
-                    new ImageSet() { Action = MotionAction.Idle, PerImageLimit = 250, Images = new string[] {@"media\idle.0.png", @"media\idle.1.png"} },
-                    new ImageSet() { Action = MotionAction.Up, PerImageLimit = 250, Images = new string[] { @"media\up.0.png", @"media\up.1.png" } },
-                    new ImageSet() { Action = MotionAction.Left, PerImageLimit = 250, Images = new string[] { @"media\run.l.0.png", @"media\run.l.1.png", @"media\run.l.2.png" } },
-                    new ImageSet() { Action = MotionAction.Right, PerImageLimit = 250, Images = new string[] { @"media\run.r.0.png", @"media\run.r.1.png", @"media\run.r.2.png" } },
-                    new ImageSet() { Action = MotionAction.Down, PerImageLimit = 250, Images = new string[] { @"media\down.0.png", @"media\down.1.png" } }
+                    new ImageSet() { Action = MotionAction.Idle, PerImageLimit = 250, ImagePaths = new string[] {@"media\idle.0.png", @"media\idle.1.png"}, Images = new IImage[2] },
+                    new ImageSet() { Action = MotionAction.Up, PerImageLimit = 250, ImagePaths = new string[] { @"media\up.0.png", @"media\up.1.png" }, Images = new IImage[2] },
+                    new ImageSet() { Action = MotionAction.Left, PerImageLimit = 250, ImagePaths = new string[] { @"media\run.l.0.png", @"media\run.l.1.png", @"media\run.l.2.png" }, Images = new IImage[3] },
+                    new ImageSet() { Action = MotionAction.Right, PerImageLimit = 250, ImagePaths = new string[] { @"media\run.r.0.png", @"media\run.r.1.png", @"media\run.r.2.png" }, Images = new IImage[3] },
+                    new ImageSet() { Action = MotionAction.Down, PerImageLimit = 250, ImagePaths = new string[] { @"media\down.0.png", @"media\down.1.png" }, Images = new IImage[2] }
                 },
                 X,
                 Y
@@ -48,17 +48,17 @@ namespace stickario
             {
                 HasPreloaded = true;
                 // load all the images
-                foreach(var img in Motion.All())
-                { 
-                    g.Image(img, -10000, -10000, Width, Height);
-                }
+                Motion.LoadImages((path) =>
+                {
+                    return g.CreateImage(path);
+                });
             }
 
             // give movement feedback
             Motion.Advance(X, Y);
 
             // display image
-            g.Image(Motion.ImagePath, X - (Width / 2), Y - (Height / 2), Width, Height);
+            g.Image(Motion.Image, X - (Width / 2), Y - (Height / 2), Width, Height);
 
             base.Draw(g);
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using engine.Common;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,10 +10,11 @@ namespace stickario
 {
     enum MotionAction { Idle = 0, Up = 1, Left = 2, Right = 3, Down = 4 };
 
-    struct ImageSet
+    class ImageSet
     {
         public MotionAction Action;
-        public string[] Images;
+        public string[] ImagePaths;
+        public IImage[] Images;
         public int PerImageLimit;
     }
 
@@ -43,20 +45,21 @@ namespace stickario
 
         public int IdleLimit { get; set; }
 
-        public IEnumerable<string> All()
+        public void LoadImages(Func<string, IImage> loadImage)
         {
             foreach(var set in ImageSets.Values)
             {
-                foreach(var img in set.Images)
+                set.Images = new IImage[set.ImagePaths.Length];
+                for(int i=0; i<set.ImagePaths.Length; i++)
                 {
-                    yield return img;
+                    set.Images[i] = loadImage(set.ImagePaths[i]);
                 }
             }
         }
 
         public MotionAction CurrentAction { get; private set; }
         public MotionAction PreviousAction { get; private set; }
-        public string ImagePath { get; private set; }
+        public IImage Image { get; private set; }
 
         // sets CurrentAction, PreviousAction, ImagePath
         // should be called often
@@ -76,7 +79,7 @@ namespace stickario
             ImageSet set = default(ImageSet);
             if (!ImageSets.TryGetValue(CurrentAction, out set)) throw new Exception("Failed to get images for action : " + CurrentAction);
             var index = ImageIndex % set.Images.Length;
-            ImagePath = set.Images[index];
+            Image = set.Images[index];
 
             // advance
             if (ImageTimer.ElapsedMilliseconds > set.PerImageLimit)
@@ -145,9 +148,6 @@ namespace stickario
 
             return CurrentAction;
         }
-
         #endregion
-
-
     }
 }

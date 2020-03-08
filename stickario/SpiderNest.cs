@@ -27,7 +27,15 @@ namespace stickario
 
         public override void Draw(IGraphics g)
         {
-            g.Image(ImagePaths[ImageIndex ? 0 : 1], X - (Width / 2), Y - (Height / 2), Width, Height);
+            // initialize
+            if (Images == null)
+            {
+                Images = new IImage[ImagePaths.Length];
+                for (int i = 0; i < ImagePaths.Length; i++) Images[i] = g.CreateImage(ImagePaths[i]);
+            }
+
+            // draw
+            g.Image(Images[ImageIndex ? 0 : 1], X - (Width / 2), Y - (Height / 2), Width, Height);
             ImageIndex = !ImageIndex;
             base.Draw(g);
         }
@@ -56,6 +64,7 @@ namespace stickario
         private const int CountdownMax = 1000 / Constants.GlobalClock;
         private int Countdown;
         private string[] ImagePaths = new string[] { @"media\nest.0.png", @"media\nest.1.png" };
+        private IImage[] Images;
         private bool ImageIndex;
         #endregion
     }

@@ -32,9 +32,9 @@ namespace stickario
             Motion = new InMotion(
                 new ImageSet[]
                 {
-                    new ImageSet() { Action = MotionAction.Left, PerImageLimit = 200, Images = move},
-                    new ImageSet() { Action = MotionAction.Right, PerImageLimit = 200, Images = move},
-                    new ImageSet() { Action = MotionAction.Idle, PerImageLimit = 400, Images = new string[] { @"media\spider.d.0.png", @"media\spider.d.1.png", @"media\spider.d.2.png", @"media\spider.d.3.png"  }}
+                    new ImageSet() { Action = MotionAction.Left, PerImageLimit = 200, ImagePaths = move},
+                    new ImageSet() { Action = MotionAction.Right, PerImageLimit = 200, ImagePaths = move},
+                    new ImageSet() { Action = MotionAction.Idle, PerImageLimit = 400, ImagePaths = new string[] { @"media\spider.d.0.png", @"media\spider.d.1.png", @"media\spider.d.2.png", @"media\spider.d.3.png"  }}
                 },
                 X,
                 Y
@@ -54,10 +54,10 @@ namespace stickario
             {
                 HasPreloaded = true;
                 // load all the images
-                foreach(var img in Motion.All())
-                { 
-                    g.Image(img, -10000, -10000, Width, Height);
-                }
+                Motion.LoadImages((path) =>
+                {
+                    return g.CreateImage(path);
+                });
             }
 
             // advance
@@ -73,7 +73,7 @@ namespace stickario
                 }
                 
                 // draw image
-                g.Image(Motion.ImagePath, X - (Width / 2), Y - (Height / 2), Width, Height);
+                g.Image(Motion.Image, X - (Width / 2), Y - (Height / 2), Width, Height);
             }
 
             base.Draw(g);
