@@ -13,8 +13,7 @@ namespace stickario
     class ImageSet
     {
         public MotionAction Action;
-        public string[] ImagePaths;
-        public IImage[] Images;
+        public ImageSource[] Images;
         public int PerImageLimit;
     }
 
@@ -45,18 +44,6 @@ namespace stickario
 
         public int IdleLimit { get; set; }
 
-        public void LoadImages(Func<string, IImage> loadImage)
-        {
-            foreach(var set in ImageSets.Values)
-            {
-                set.Images = new IImage[set.ImagePaths.Length];
-                for(int i=0; i<set.ImagePaths.Length; i++)
-                {
-                    set.Images[i] = loadImage(set.ImagePaths[i]);
-                }
-            }
-        }
-
         public MotionAction CurrentAction { get; private set; }
         public MotionAction PreviousAction { get; private set; }
         public IImage Image { get; private set; }
@@ -79,7 +66,7 @@ namespace stickario
             ImageSet set = default(ImageSet);
             if (!ImageSets.TryGetValue(CurrentAction, out set)) throw new Exception("Failed to get images for action : " + CurrentAction);
             var index = ImageIndex % set.Images.Length;
-            Image = set.Images[index];
+            Image = set.Images[index].Image;
 
             // advance
             if (ImageTimer.ElapsedMilliseconds > set.PerImageLimit)

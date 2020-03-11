@@ -28,13 +28,13 @@ namespace stickario
             MaxYForcePercentage = 0.6f;
 
             // setup
-            var move = new string[] { @"media\spider.r.0.png", @"media\spider.r.1.png", @"media\spider.r.2.png", @"media\spider.r.3.png" };
+            var move = new ImageSource[] { new ImageSource(path: @"media\spider.r.0.png"), new ImageSource(path: @"media\spider.r.1.png"), new ImageSource(path: @"media\spider.r.2.png"), new ImageSource(path: @"media\spider.r.3.png") };
             Motion = new InMotion(
                 new ImageSet[]
                 {
-                    new ImageSet() { Action = MotionAction.Left, PerImageLimit = 200, ImagePaths = move},
-                    new ImageSet() { Action = MotionAction.Right, PerImageLimit = 200, ImagePaths = move},
-                    new ImageSet() { Action = MotionAction.Idle, PerImageLimit = 400, ImagePaths = new string[] { @"media\spider.d.0.png", @"media\spider.d.1.png", @"media\spider.d.2.png", @"media\spider.d.3.png"  }}
+                    new ImageSet() { Action = MotionAction.Left, PerImageLimit = 200, Images = move},
+                    new ImageSet() { Action = MotionAction.Right, PerImageLimit = 200, Images = move},
+                    new ImageSet() { Action = MotionAction.Idle, PerImageLimit = 400, Images = new ImageSource[] { new ImageSource(path: @"media\spider.d.0.png"), new ImageSource(path: @"media\spider.d.1.png"), new ImageSource(path: @"media\spider.d.2.png"), new ImageSource(path: @"media\spider.d.3.png")  }}
                 },
                 X,
                 Y
@@ -49,17 +49,6 @@ namespace stickario
 
         public override void Draw(IGraphics g)
         {
-            // to avoid flicker - preload all the images on first view
-            if (!HasPreloaded)
-            {
-                HasPreloaded = true;
-                // load all the images
-                Motion.LoadImages((path) =>
-                {
-                    return g.CreateImage(path);
-                });
-            }
-
             // advance
             Motion.Advance(X, Y);
 
@@ -137,7 +126,6 @@ namespace stickario
 
         #region private
         private InMotion Motion;
-        private bool HasPreloaded;
 
         private Random Rand;
         private bool JumpNextTime;
