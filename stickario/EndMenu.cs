@@ -52,15 +52,15 @@ namespace stickario
                 }
                 top += 50;
 
-                g.Text(RGBA.Black, left, top, string.Format("Score          = {0}", Score));
+                g.Text(RGBA.Black, left, top, string.Format("Score          = {0:f0}", Score));
                 top += 30;
                 g.Text(RGBA.Black, left, top, string.Format("Total Coins = {0}", Player.Coins));
                 top += 30;
                 g.Text(RGBA.Black, left, top, string.Format("Spider Kills = {0}", Player.Kills));
                 top += 50;
-                g.Text(RGBA.Black, left, top, string.Format("Max Score  = {0}", MaxScore));
+                g.Text(RGBA.Black, left, top, string.Format("Max Score  = {0:f0}", MaxScore));
                 top += 30;
-                g.Text(RGBA.Black, left, top, string.Format("Total Score = {0}", TotalScore));
+                g.Text(RGBA.Black, left, top, string.Format("Total Score = {0:f0}", TotalScore));
                 top += 50;
 
                 if (Reason != EndReason.AtFinish)

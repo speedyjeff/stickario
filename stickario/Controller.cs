@@ -155,18 +155,13 @@ namespace stickario
 
         public void ObjectContact(Element element, Element elem)
         {
-            Stickario stickario = null;
-
-            if (element is Stickario)
+            if (element is Stickario stickario)
             {
-                stickario = (element as Stickario);
-
-                if (elem is ItemBox)
+                if (elem is ItemBox box)
                 {
                     // check if we are 'under' this object
                     if (element.Y > elem.Y && element.X >= elem.X - (elem.Width / 2) && element.X < elem.X + (elem.Width / 2))
                     {
-                        var box = elem as ItemBox;
                         var action = box.Activate();
 
                         switch (action)
@@ -188,10 +183,8 @@ namespace stickario
                 }
 
                 // check for invisible blocks
-                if (elem is InvisibleMarker)
+                if (elem is InvisibleMarker marker)
                 {
-                    var marker = elem as InvisibleMarker;
-
                     switch (marker.Type)
                     {
                         case MarkerType.Death:

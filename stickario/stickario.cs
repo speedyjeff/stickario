@@ -45,13 +45,14 @@ namespace stickario
 
         public override void Draw(IGraphics g)
         {
-            // give movement feedback
-            Motion.Advance(X, Y);
-
             // display image
             g.Image(Motion.Image, X - (Width / 2), Y - (Height / 2), Width, Height);
+        }
 
-            base.Draw(g);
+        public override void Update()
+        {
+            // give movement feedback
+            Motion.Advance(X, Y);
         }
 
         public override void Feedback(ActionEnum action, object item, bool result)

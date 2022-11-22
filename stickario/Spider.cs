@@ -49,6 +49,12 @@ namespace stickario
 
         public override void Draw(IGraphics g)
         {
+            // draw image
+            if (!IsDead) g.Image(Motion.Image, X - (Width / 2), Y - (Height / 2), Width, Height);
+        }
+
+        public override void Update()
+        {
             // advance
             Motion.Advance(X, Y);
 
@@ -60,12 +66,7 @@ namespace stickario
                     // continue to die
                     InDeathSequence--;
                 }
-                
-                // draw image
-                g.Image(Motion.Image, X - (Width / 2), Y - (Height / 2), Width, Height);
             }
-
-            base.Draw(g);
         }
 
         public override ActionEnum Action(List<Element> elements, float angleToCenter, bool inZone, ref float xdelta, ref float ydelta, ref float zdelta, ref float angle)

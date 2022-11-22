@@ -21,23 +21,25 @@ namespace stickario
 
             Width = Height = 50;
             Countdown = 0;
+
+            // initialize
+            Images = new IImage[ImagePaths.Length];
+            for (int i = 0; i < ImagePaths.Length; i++) Images[i] = Controller.Images[ImagePaths[i]];
         }
 
         public static bool Activated { get; set; } = false;
 
         public override void Draw(IGraphics g)
         {
-            // initialize
-            if (Images == null)
-            {
-                Images = new IImage[ImagePaths.Length];
-                for (int i = 0; i < ImagePaths.Length; i++) Images[i] = Controller.Images[ImagePaths[i]];
-            }
-
             // draw
             g.Image(Images[ImageIndex ? 0 : 1], X - (Width / 2), Y - (Height / 2), Width, Height);
-            ImageIndex = !ImageIndex;
             base.Draw(g);
+        }
+
+        public override void Update()
+        {
+            // swap the image
+            ImageIndex = !ImageIndex;
         }
 
         public override ActionEnum Action(List<Element> elements, float angleToCenter, bool inZone, ref float xdelta, ref float ydelta, ref float zdelta, ref float angle)

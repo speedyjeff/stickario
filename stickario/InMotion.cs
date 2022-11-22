@@ -28,12 +28,21 @@ namespace stickario
             {
                 ImageSets.Add(set.Action, set);
                 IsTracked[(int)set.Action] = true;
+
+                // set the default image
+                if (set.Action == MotionAction.Idle)
+                {
+                    if (set.Images.Length == 0) throw new Exception("invalid idle imageset");
+                    Image = set.Images[0].Image;
+                }
             }
 
             // init
             PreviousX = x;
             PreviousY = y;
             IdleLimit = 500;
+
+            if (Image == null) throw new Exception("must provide an idel image set");
 
             // setup
             ImageTimer = new Stopwatch();
@@ -63,8 +72,7 @@ namespace stickario
             }
 
             // get the relevant image
-            ImageSet set = default(ImageSet);
-            if (!ImageSets.TryGetValue(CurrentAction, out set)) throw new Exception("Failed to get images for action : " + CurrentAction);
+            if (!ImageSets.TryGetValue(CurrentAction, out ImageSet set)) throw new Exception("Failed to get images for action : " + CurrentAction);
             var index = ImageIndex % set.Images.Length;
             Image = set.Images[index].Image;
 
