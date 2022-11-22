@@ -20,15 +20,18 @@ namespace stickario
             ShowDefaultDrawing = false;
             Coins = 0;
 
+            // set image
+            Image = new ImageSource("stickario", Controller.Images["stickario"]);
+
             // track motion and handle images
             Motion = new InMotion(
                 new ImageSet[]
                 {
-                    new ImageSet() { Action = MotionAction.Idle, PerImageLimit = 250, Images = new ImageSource[] { new ImageSource(path: @"media\idle.0.png"), new ImageSource(path: @"media\idle.1.png")} },
-                    new ImageSet() { Action = MotionAction.Up, PerImageLimit = 250, Images = new ImageSource[] { new ImageSource(path: @"media\up.0.png"), new ImageSource(path: @"media\up.1.png") } },
-                    new ImageSet() { Action = MotionAction.Left, PerImageLimit = 250, Images = new ImageSource[] { new ImageSource(path: @"media\run.l.0.png"), new ImageSource(path: @"media\run.l.1.png"),new ImageSource(path: @"media\run.l.2.png") } },
-                    new ImageSet() { Action = MotionAction.Right, PerImageLimit = 250, Images = new ImageSource[] { new ImageSource(path: @"media\run.r.0.png"), new ImageSource(path: @"media\run.r.1.png"), new ImageSource(path: @"media\run.r.2.png") } },
-                    new ImageSet() { Action = MotionAction.Down, PerImageLimit = 250, Images = new ImageSource[] { new ImageSource(path: @"media\down.0.png"), new ImageSource(path: @"media\down.1.png") } }
+                    new ImageSet() { Action = MotionAction.Idle, PerImageLimit = 250, Images = new ImageSource[] { new ImageSource("idle_0", Controller.Images["idle_0"]), new ImageSource("idle_1", Controller.Images["idle_1"])} },
+                    new ImageSet() { Action = MotionAction.Up, PerImageLimit = 250, Images = new ImageSource[] { new ImageSource("up_0", Controller.Images["up_0"]), new ImageSource("up_1", Controller.Images["up_1"]) } },
+                    new ImageSet() { Action = MotionAction.Left, PerImageLimit = 250, Images = new ImageSource[] { new ImageSource("run_l_0", Controller.Images["run_l_0"]), new ImageSource("run_l_1", Controller.Images["run_l_1"]),new ImageSource("run_l_2", Controller.Images["run_l_2"]) } },
+                    new ImageSet() { Action = MotionAction.Right, PerImageLimit = 250, Images = new ImageSource[] { new ImageSource("run_r_0", Controller.Images["run_r_0"]), new ImageSource("run_r_1", Controller.Images["run_r_1"]), new ImageSource("run_r_2", Controller.Images["run_r_2"]) } },
+                    new ImageSet() { Action = MotionAction.Down, PerImageLimit = 250, Images = new ImageSource[] { new ImageSource("down_0", Controller.Images["down_0"]), new ImageSource("down_1", Controller.Images["down_1"]) } }
                 },
                 X,
                 Y
@@ -38,7 +41,7 @@ namespace stickario
         public int Coins { get; set; }
         public event Action<Player, float> OnApplyForce;
 
-        public override ImageSource Image => new ImageSource(path: @"media\stickario.png");
+        public override ImageSource Image => null;
 
         public override void Draw(IGraphics g)
         {

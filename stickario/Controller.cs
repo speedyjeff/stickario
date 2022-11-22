@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using engine.Common;
 using engine.Common.Entities;
+using engine.Winforms;
 
 namespace stickario
 {
@@ -115,7 +116,7 @@ namespace stickario
         public void Setup()
         {
             // called right before game play starts
-            World.Music(@"media\DANCE.mid", true /*repeat*/);
+            World.Music(@"media\dance.mid", repeat: true);
         }
 
         public bool BeforeKeyPressed(Player player, ref char key)
@@ -123,6 +124,7 @@ namespace stickario
             switch(key)
             {
                 case Constants.Space:
+                case Constants.Space2:
                 case Constants.Up:
                 case Constants.Up2:
                 case Constants.UpArrow:
@@ -380,6 +382,8 @@ namespace stickario
             return results;
         }
 
+        public static Dictionary<string, IImage> Images;
+
         #region private
         private const int PlatformThickness = 20;
         private const int WorldChunkWidth = 1000;
@@ -394,10 +398,30 @@ namespace stickario
         private SpiderNest[] Nests;
         private List<Spider> ActiveSpiders;
 
-        private string CoinSoundPath => @"media\bling.wav";
-        private string DeathSoundPath => @"media\oof.wav";
-        private string WinSoundPath => @"media\yea.wav";
-        private string SplatSoundPath => @"media\splat.wav";
+        private string CoinSoundPath => "bling";
+        private string DeathSoundPath => "oof";
+        private string WinSoundPath => "yea";
+        private string SplatSoundPath => "splat";
+
+        static Controller()
+        {
+            // preload resources from embedded resources
+            Images = Resources.LoadImages(System.Reflection.Assembly.GetExecutingAssembly());
+
+            // add transparency to all these images
+            foreach (var image in Images.Values)
+            {
+                image.MakeTransparent(RGBA.White);
+            }
+
+            // load sounds
+            var sounds = Resources.Load(System.Reflection.Assembly.GetExecutingAssembly(), extension: ".wav");
+            foreach(var kvp in sounds)
+            {
+                // stream must remain open
+                Sounds.Preload(kvp.Key, new MemoryStream(kvp.Value));
+            }
+        }
 
         private float Score(Player player)
         {

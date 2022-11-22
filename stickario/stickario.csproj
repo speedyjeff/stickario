@@ -1,186 +1,82 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A5B7370B-DDF6-4BAE-A697-C76DB9B5D6AB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>stickario</RootNamespace>
-    <AssemblyName>stickario</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <None Remove="media\bling.wav" />
+    <None Remove="media\down_0.png" />
+    <None Remove="media\down_1.png" />
+    <None Remove="media\idle_0.png" />
+    <None Remove="media\idle_1.png" />
+    <None Remove="media\nest_0.png" />
+    <None Remove="media\nest_1.png" />
+    <None Remove="media\oof.wav" />
+    <None Remove="media\run_l_0.png" />
+    <None Remove="media\run_l_1.png" />
+    <None Remove="media\run_l_2.png" />
+    <None Remove="media\run_r_0.png" />
+    <None Remove="media\run_r_1.png" />
+    <None Remove="media\run_r_2.png" />
+    <None Remove="media\spider_d_0.png" />
+    <None Remove="media\spider_d_1.png" />
+    <None Remove="media\spider_d_2.png" />
+    <None Remove="media\spider_d_3.png" />
+    <None Remove="media\spider_r_0.png" />
+    <None Remove="media\spider_r_1.png" />
+    <None Remove="media\spider_r_2.png" />
+    <None Remove="media\spider_r_3.png" />
+    <None Remove="media\splat.wav" />
+    <None Remove="media\stickario.png" />
+    <None Remove="media\up_0.png" />
+    <None Remove="media\up_1.png" />
+    <None Remove="media\yea.wav" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Controller.cs" />
-    <Compile Include="InMotion.cs" />
-    <Compile Include="InvisibleMarker.cs" />
-    <Compile Include="ItemBox.cs" />
-    <Compile Include="EndMenu.cs" />
-    <Compile Include="Platform.cs" />
-    <Compile Include="Spider.cs" />
-    <Compile Include="SpiderNest.cs" />
-    <Compile Include="StartMenu.cs" />
-    <Compile Include="Stickario.cs" />
-    <Compile Include="StickarioForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StickarioForm.Designer.cs">
-      <DependentUpon>StickarioForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Main.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    <EmbeddedResource Include="media\bling.wav" />
+    <EmbeddedResource Include="media\down_0.png" />
+    <EmbeddedResource Include="media\down_1.png" />
+    <EmbeddedResource Include="media\idle_0.png" />
+    <EmbeddedResource Include="media\idle_1.png" />
+    <EmbeddedResource Include="media\nest_0.png" />
+    <EmbeddedResource Include="media\nest_1.png" />
+    <EmbeddedResource Include="media\oof.wav" />
+    <EmbeddedResource Include="media\run_l_0.png" />
+    <EmbeddedResource Include="media\run_l_1.png" />
+    <EmbeddedResource Include="media\run_l_2.png" />
+    <EmbeddedResource Include="media\run_r_0.png" />
+    <EmbeddedResource Include="media\run_r_1.png" />
+    <EmbeddedResource Include="media\run_r_2.png" />
+    <EmbeddedResource Include="media\spider_d_0.png" />
+    <EmbeddedResource Include="media\spider_d_1.png" />
+    <EmbeddedResource Include="media\spider_d_2.png" />
+    <EmbeddedResource Include="media\spider_d_3.png" />
+    <EmbeddedResource Include="media\spider_r_0.png" />
+    <EmbeddedResource Include="media\spider_r_1.png" />
+    <EmbeddedResource Include="media\spider_r_2.png" />
+    <EmbeddedResource Include="media\spider_r_3.png" />
+    <EmbeddedResource Include="media\splat.wav" />
+    <EmbeddedResource Include="media\stickario.png" />
+    <EmbeddedResource Include="media\up_0.png" />
+    <EmbeddedResource Include="media\up_1.png" />
+    <EmbeddedResource Include="media\yea.wav" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\engine\engine.Common\engine.Common.csproj" />
+    <ProjectReference Include="..\engine\engine.Winforms\engine.Winforms.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="media\dance.mid">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="media\bling.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\DANCE.mid">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\down.0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\down.1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\idle.0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\idle.1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\nest.0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\nest.1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\oof.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\run.l.0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\run.l.1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\run.l.2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\run.r.0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\run.r.1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\run.r.2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\spider.d.0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\spider.d.1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\spider.d.2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\spider.d.3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\spider.r.0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\spider.r.1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\spider.r.2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\spider.r.3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\splat.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\stickario.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\up.0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\up.1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="media\yea.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\engine\engine.Common\engine.Common.csproj">
-      <Project>{a181b9f7-0422-4805-915e-573e13d07312}</Project>
-      <Name>engine.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\engine\engine.Winforms\engine.Winforms.csproj">
-      <Project>{c031d3fa-2ec9-423a-a04d-3b176c141577}</Project>
-      <Name>engine.Winforms</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

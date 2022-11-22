@@ -28,13 +28,13 @@ namespace stickario
             MaxYForcePercentage = 0.6f;
 
             // setup
-            var move = new ImageSource[] { new ImageSource(path: @"media\spider.r.0.png"), new ImageSource(path: @"media\spider.r.1.png"), new ImageSource(path: @"media\spider.r.2.png"), new ImageSource(path: @"media\spider.r.3.png") };
+            var move = new ImageSource[] { new ImageSource("spider_r_0", Controller.Images["spider_r_0"]), new ImageSource("spider_r_1", Controller.Images["spider_r_1"]), new ImageSource("spider_r_2", Controller.Images["spider_r_2"]), new ImageSource("spider_r_3", Controller.Images["spider_r_3"]) };
             Motion = new InMotion(
                 new ImageSet[]
                 {
                     new ImageSet() { Action = MotionAction.Left, PerImageLimit = 200, Images = move},
                     new ImageSet() { Action = MotionAction.Right, PerImageLimit = 200, Images = move},
-                    new ImageSet() { Action = MotionAction.Idle, PerImageLimit = 400, Images = new ImageSource[] { new ImageSource(path: @"media\spider.d.0.png"), new ImageSource(path: @"media\spider.d.1.png"), new ImageSource(path: @"media\spider.d.2.png"), new ImageSource(path: @"media\spider.d.3.png")  }}
+                    new ImageSet() { Action = MotionAction.Idle, PerImageLimit = 400, Images = new ImageSource[] { new ImageSource("spider_d_0", Controller.Images["spider_d_0"]), new ImageSource("spider_d_1", Controller.Images["spider_d_1"]), new ImageSource("spider_d_2", Controller.Images["spider_d_2"]), new ImageSource("spider_d_3", Controller.Images["spider_d_3"])  }}
                 },
                 X,
                 Y

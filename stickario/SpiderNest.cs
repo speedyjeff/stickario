@@ -31,7 +31,7 @@ namespace stickario
             if (Images == null)
             {
                 Images = new IImage[ImagePaths.Length];
-                for (int i = 0; i < ImagePaths.Length; i++) Images[i] = g.CreateImage(ImagePaths[i]);
+                for (int i = 0; i < ImagePaths.Length; i++) Images[i] = Controller.Images[ImagePaths[i]];
             }
 
             // draw
@@ -63,7 +63,7 @@ namespace stickario
         #region private
         private const int CountdownMax = 1000 / Constants.GlobalClock;
         private int Countdown;
-        private string[] ImagePaths = new string[] { @"media\nest.0.png", @"media\nest.1.png" };
+        private string[] ImagePaths = new string[] {"nest_0", "nest_1" };
         private IImage[] Images;
         private bool ImageIndex;
         #endregion
